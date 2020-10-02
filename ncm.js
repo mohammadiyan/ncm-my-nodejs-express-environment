@@ -1,4 +1,4 @@
-require('dotenv')
+const env = require('dotenv').config()
 const path = require('path');
 const fs = require('fs');
 class Ncm {
