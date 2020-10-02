@@ -65,8 +65,9 @@ class Ncm {
             app.use(express.json());
             app.use(express.urlencoded({extended:true}));
             app.set('x-powered-by',false)
-            app.set('views',this.viewsFolder)
             app.use(express.static(this.publicFolder))
+            app.set('views',this.viewsFolder)
+            app.set('view engine', 'pug')
             try{
                 app.use(require('cookie-parser')('Emok-Ncm',`emokncm-${Date.now()}-secret`));
             }catch(e){
@@ -92,7 +93,7 @@ class Ncm {
                 console.error("\x1b[31m%s\x1b[0m",`Ncm run error - problem in router files structure: ${e.code}`);
             }
             app.use((req,res)=>{
-                res.sendFile(path.join(this.publicFolder,'html','index.html'))
+                res.end('404 not found')
             })
             const server = require('http').createServer(app).listen(this.port,()=>{
                 console.log("\x1b[32m%s\x1b[0m",`Your Ncm server is runnig on port: ${this.port}`);
